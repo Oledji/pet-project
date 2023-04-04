@@ -17,7 +17,7 @@
                     <hr />
                     <router-link :to="{name: 'liked'}" class="user_info_btn">Liked pictures</router-link>    
                     <hr />
-                    <my-button class="btn">Log out</my-button>
+                    <my-button class="btn" @click="onLogOut">Log out</my-button>
                 </div>   
             </div>       
         </div>
@@ -51,6 +51,9 @@ import myButton from './UI/myButton.vue';
             },
             getUser() {
                 this.$store.dispatch('getUserInfo')
+            },
+            onLogOut() {
+                this.$store.commit('onLogOut__success')
             }
         },
         computed: {

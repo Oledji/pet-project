@@ -23,6 +23,11 @@ export const AuthModule = {
             localStorage.setItem('access_token',data.data.access_token)
             state.isAuth = true;
         },
+        onLogOut__success(state) {
+            state.access_token = ''
+            localStorage.removeItem('access_token')
+            state.isAuth = false;
+        },
         isAuthorize(state) {
             console.log('worked')
             if(state.access_token != null) return state.isAuth = true
