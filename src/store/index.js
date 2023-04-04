@@ -70,8 +70,13 @@ export default createStore({
           'Expires': '0',
         }
       })
-      this.commit('getPhotos__success', response);
-      console.log(response);
+      response.then(response => {
+        this.commit('getPhotos__success', response);
+        console.log(response);
+      })
+      response.catch(e => {
+        console.log(e)
+      })
     },
     async getTopics({ state }, data) {
       let response = await axios.get('https://api.unsplash.com/topics', {
@@ -87,14 +92,19 @@ export default createStore({
           'Expires': '0',
         }
       })
-      this.dispatch('getTopicsPhoto', {
-        page: 1,
-        count: 28,
-        query: response.data[0].id,
-        order_by: 'latest'
-      });
-      this.commit('getTopics__success', response)
-      console.log(response);
+      response.then(response => {
+        this.dispatch('getTopicsPhoto', {
+          page: 1,
+          count: 28,
+          query: response.data[0].id,
+          order_by: 'latest'
+        });
+        this.commit('getTopics__success', response)
+        console.log(response);
+      })
+      response.catch(e => {
+        console.log(e)
+      })
     },
     async getTopicsPhoto({ state }, data) {
       let response = await axios.get(`https://api.unsplash.com/topics/${data.query}/photos`, {
@@ -111,8 +121,13 @@ export default createStore({
           'Expires': '0',
         }
       })
-      this.commit('getTopicsPhoto__success', response);
-      console.log(response);
+      response.then(response => {
+        this.commit('getTopicsPhoto__success', response);
+        console.log(response);
+      })
+      response.catch(e => {
+        console.log(e)
+      })
     },
     async likePhoto({ state }, data) {
       let response = await axios(
@@ -126,8 +141,13 @@ export default createStore({
             'Authorization': `Bearer ${state.AuthModule.access_token}`
           }
         })
-      this.commit('likePhoto__success', response);
-      console.log(response);
+      response.then(response => {
+        this.commit('likePhoto__success', response);
+        console.log(response);
+      })
+      response.catch(e => {
+        console.log(e)
+      })
     },
     async unlikePhoto({ state }, data) {
       let response = await axios(
@@ -141,8 +161,13 @@ export default createStore({
             'Authorization': `Bearer ${state.AuthModule.access_token}`
           }
       })
-      this.commit('unlikePhoto__success', response);
-      console.log(response);
+      response.then(response => {
+        this.commit('unlikePhoto__success', response);
+        console.log(response);
+      })
+      response.catch(e => {
+        console.log(e)
+      })
     },
     async getUserInfo({ state }) {
       if(state.user == null) {
@@ -159,9 +184,14 @@ export default createStore({
               'Expires': '0',
               'Authorization': `Bearer ${state.AuthModule.access_token}`
             }
-          })
-        this.commit('userInfo__success', response);
-        console.log(response);
+        })
+        response.then(response => {
+          this.commit('userInfo__success', response);
+          console.log(response);
+        })
+        response.catch(e => {
+          console.log(e)
+        })
       }
     },
     async getLikedPhotos({ state },data) {

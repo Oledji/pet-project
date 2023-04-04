@@ -57,8 +57,13 @@ export const AuthModule = {
                         'Expires': '0',
                     }
                 })
-                console.log(response);
-                this.commit('onLog__success', response);
+                response.then(response => {
+                    console.log(response);
+                    this.commit('onLog__success', response);
+                })
+                response.catch(e => {
+                    console.log(e)
+                })
             }
         },
     }
