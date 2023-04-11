@@ -57,7 +57,7 @@ export default createStore({
   },
   actions: {
     async getPhotos({ state }, data) {
-      let response = await axios.get('https://api.unsplash.com/search/photos', {
+      await axios.get('https://api.unsplash.com/search/photos', {
         params: {
           query: data.query,
           page: data.page,
@@ -70,16 +70,16 @@ export default createStore({
           'Expires': '0',
         }
       })
-      response.then(response => {
+      .then(response => {
         this.commit('getPhotos__success', response);
         console.log(response);
       })
-      response.catch(e => {
+      .catch(e => {
         console.log(e)
       })
     },
     async getTopics({ state }, data) {
-      let response = await axios.get('https://api.unsplash.com/topics', {
+      await axios.get('https://api.unsplash.com/topics', {
         params: {
           client_id: state.client_id,
           order_by: data.order_by,
@@ -92,7 +92,7 @@ export default createStore({
           'Expires': '0',
         }
       })
-      response.then(response => {
+      .then(response => {
         this.dispatch('getTopicsPhoto', {
           page: 1,
           count: 28,
@@ -102,12 +102,12 @@ export default createStore({
         this.commit('getTopics__success', response)
         console.log(response);
       })
-      response.catch(e => {
+      .catch(e => {
         console.log(e)
       })
     },
     async getTopicsPhoto({ state }, data) {
-      let response = await axios.get(`https://api.unsplash.com/topics/${data.query}/photos`, {
+      await axios.get(`https://api.unsplash.com/topics/${data.query}/photos`, {
         params: {
           client_id: state.client_id,
           query: data.query,
@@ -121,16 +121,16 @@ export default createStore({
           'Expires': '0',
         }
       })
-      response.then(response => {
+      .then(response => {
         this.commit('getTopicsPhoto__success', response);
         console.log(response);
       })
-      response.catch(e => {
+      .catch(e => {
         console.log(e)
       })
     },
     async likePhoto({ state }, data) {
-      let response = await axios(
+      await axios(
         {
           method: 'POST',
           url: `https://api.unsplash.com/photos/${data.query}/like`,
@@ -141,16 +141,16 @@ export default createStore({
             'Authorization': `Bearer ${state.AuthModule.access_token}`
           }
         })
-      response.then(response => {
+      .then(response => {
         this.commit('likePhoto__success', response);
         console.log(response);
       })
-      response.catch(e => {
+      .catch(e => {
         console.log(e)
       })
     },
     async unlikePhoto({ state }, data) {
-      let response = await axios(
+      await axios(
         {
           method: 'DELETE',
           url: `https://api.unsplash.com/photos/${data.query}/like`,
@@ -161,17 +161,17 @@ export default createStore({
             'Authorization': `Bearer ${state.AuthModule.access_token}`
           }
       })
-      response.then(response => {
+      .then(response => {
         this.commit('unlikePhoto__success', response);
         console.log(response);
       })
-      response.catch(e => {
+      .catch(e => {
         console.log(e)
       })
     },
     async getUserInfo({ state }) {
       if(state.user == null) {
-        let response = await axios(
+        await axios(
           {
             method: 'GET',
             url: `https://api.unsplash.com/me`,
@@ -185,11 +185,11 @@ export default createStore({
               'Authorization': `Bearer ${state.AuthModule.access_token}`
             }
         })
-        response.then(response => {
+        .then(response => {
           this.commit('userInfo__success', response);
           console.log(response);
         })
-        response.catch(e => {
+        .catch(e => {
           console.log(e)
         })
       }

@@ -28,12 +28,9 @@ export default {
       this.menuActive = !this.menuActive;
       console.log(this.menuActive);
     },
-    isLogged() {
-      this.$store.commit('isAuthorize')
-    }
   },
   mounted() {
-    this.isLogged();    
+    if(this.$store.getters.isAuthToken) return this.$store.state.AuthModule.isAuth = true   
   },
   watch: {
     '$route.query.code'(){

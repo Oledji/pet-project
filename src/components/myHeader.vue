@@ -9,7 +9,7 @@
             <search></search>
             <my-button v-if="!this.isAuth" @click="getAuth" class="btn">Authorization</my-button>
             <div v-if="this.isAuth" class="user_info">
-                <div class="user_info_title">
+                <div class="user_info_title" v-if="User">
                     <font-awesome-icon class="user_icon" icon="fa-solid fa-user" /> 
                     <span>Hi, {{ this.User.username }}</span>
                 </div>
@@ -61,7 +61,8 @@ import myButton from './UI/myButton.vue';
                 return this.$store.state.user
             },
             isAuth() {
-                return this.$store.state.AuthModule.isAuth
+                this.getUser()
+                return this.$store.getters.isAuthToken
             }
         },
         mounted() {

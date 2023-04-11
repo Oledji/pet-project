@@ -15,7 +15,9 @@ export const AuthModule = {
         }
     },
     getters: {
-
+        isAuthToken(state){ 
+           return state.access_token 
+        }
     },
     mutations: {
         onLog__success(state, data) {
@@ -26,13 +28,14 @@ export const AuthModule = {
         onLogOut__success(state) {
             state.access_token = ''
             localStorage.removeItem('access_token')
+            localStorage.removeItem('username')
             state.isAuth = false;
         },
-        isAuthorize(state) {
-            console.log('worked')
-            if(state.access_token != null) return state.isAuth = true
-            return state.isAuth = false
-        }
+        // isAuthorize(state) {
+        //     console.log('worked')
+        //     if(state.access_token != null) return state.isAuth = true
+        //     return state.isAuth = false
+        // }
     },
     actions: {
         async getAuthorize({ state }) {
@@ -40,7 +43,7 @@ export const AuthModule = {
         },
         async onLogAuth({ state }) {
             if (state.auth_code != null && !state.access_token) {
-                let response = await axios(
+                await axios(
                 {
                     method: 'POST',
                     url: 'https://unsplash.com/oauth/token',
@@ -57,11 +60,11 @@ export const AuthModule = {
                         'Expires': '0',
                     }
                 })
-                response.then(response => {
+                .then(response => {
                     console.log(response);
                     this.commit('onLog__success', response);
                 })
-                response.catch(e => {
+                .catch(e => {
                     console.log(e)
                 })
             }

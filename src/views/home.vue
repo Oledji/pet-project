@@ -25,9 +25,6 @@ export default {
         if(this.$store.state.AuthModule.auth_code) {
             this.auth()
         }
-    },
-    mounted() {
-        
     }
 }
 </script>
